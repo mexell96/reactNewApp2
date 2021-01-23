@@ -1,64 +1,64 @@
 import React from "react";
 import axios from "axios";
-import User from "./components/User";
+import Queries from "./components/Queries.jsx";
 
-const api = "https://600bdbcf38fd25001702cc2a.mockapi.io/";
-const usersAPI = `${api}users`;
+const api = "https://5f22f8cf0e9f660016d88b17.mockapi.io/";
+const queriesAPI = `${api}queries`;
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: [],
+      queries: [],
       warning: "",
     };
   }
 
   componentDidMount() {
-    axios.get(usersAPI).then(({ data }) => {
+    axios.get(queriesAPI).then(({ data }) => {
       console.log(data);
-      this.setState({ users: data }); // в users кладём data
+      this.setState({ queries: data }); // в queries кладём data
     });
   }
 
   componentDidUpdate() {
-    console.log(this.state.users);
-    if (this.state.users.length < 6 && this.state.users.length !== 0) {
-      this.setState({ warning: "You have deleted a lot of users!!!!" });
+    console.log(this.state.queries);
+    if (this.state.queries.length < 6 && this.state.queries.length !== 0) {
+      this.setState({ warning: "You have deleted a lot of queries!!!!" });
     }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.users.length === nextState.users.length) {
+    if (this.state.queries.length === nextState.queries.length) {
       return false;
     }
     return true;
   }
 
   handleClick = (e) => {
-    const { users } = this.state;
-    const newUsers = [...users];
-    newUsers.pop();
-    this.setState({ users: newUsers });
+    const { queries } = this.state;
+    const newQueries = [...queries];
+    newQueries.pop();
+    this.setState({ queries: newQueries });
   };
 
   render() {
-    const { users, warning } = this.state;
+    const { queries, warning } = this.state;
     return (
       <>
         <button onClick={this.handleClick}>Delete last user</button>
-        <div>Users count: {users.length}</div>
+        <div>Queries count: {queries.length}</div>
         {!!warning && <p className="title">{warning}</p>}
         <ul>
-          {users.length > 0
-            ? users.map((user) => (
-                <User
-                  key={user.id}
-                  name={user.name}
-                  avatar={user.avatar}
-                  info={user.info}
+          {queries.length > 0
+            ? queries.map((query) => (
+                <Queries
+                  key={query.id}
+                  name={query.categories}
+                  avatar={query.query}
+                  info={query.description}
                 />
               ))
-            : "no users"}
+            : "no queries"}
         </ul>
       </>
     );
