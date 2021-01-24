@@ -45,7 +45,7 @@ class App extends React.Component {
     const { queries, warning } = this.state;
     return (
       <>
-        <button onClick={this.handleClick}>Delete last user</button>
+        <button onClick={this.handleClick}>Delete last query</button>
         <div>Queries count: {queries.length}</div>
         {!!warning && <p className="title">{warning}</p>}
         <ul>
@@ -53,9 +53,9 @@ class App extends React.Component {
             ? queries.map((query) => (
                 <Queries
                   key={query.id}
-                  name={query.categories}
-                  avatar={query.query}
-                  info={query.description}
+                  query={query.query}
+                  description={query.description}
+                  link={query.link}
                 />
               ))
             : "no queries"}
